@@ -1,16 +1,16 @@
 "use strict"; 
 
+// Constant for API key and UI elements
 const API = 'c3aa059a086b78e7b9fddd553293a4e3';  // remember that the API Key is a string !
-
 const dayEl = document.querySelector(".default_day");
 const dateEl = document.querySelector(".default_date");
 const btnEl = document.querySelector('.btn_search');
 const inputEl = document.querySelector(".input_field");
-
 const iconsContainer = document.querySelector(".icons");
 const dayInfoEl = document.querySelector(".day_info");
 const listContentEl = document.querySelector('.list_content ul');
 
+// Array of day names
 const days = [
     "Sunday",
     "Monday",
@@ -21,49 +21,42 @@ const days = [
     "Saturday",
 ]
 
-// displaying the day
+// displaying the current day and the date
 const day = new Date();
 const dayName = days[day.getDay()];
 dayEl.textContent = dayName; 
 
-// display the date 
 let month = day.toLocaleString("default", {month: "long"}); 
 let date = day.getDate();
 let year = day.getFullYear(); 
 dateEl.textContent = date + " " + month + " " + year; 
 
-// add an event 
+// add an event listener to the search button 
 btnEl.addEventListener("click", (e)=> {
     e.preventDefault();
-
-    // check empty value
     if (inputEl.value !== "") {
         const Search = inputEl.value;  
         inputEl.value = "";  
-
         findLocation(Search);
     } else {
         console.log("Please Enter City or Country Name")
     }
 });
 
+// function to find the location based on the user input
 async function findLocation(name) {
     iconsContainer.innerHTML = "";
     dayInfoEl.innerHTML = "";
     listContentEl.innerHTML = ""; 
+
     try {
         const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${API}`;
         const data = await fetch(API_URL); 
         const result = await data.json();
 
         if (result.cod !== "404") {
-            // display image content
             const ImageContent = displayImageContent(result);
-
-            // display right side content
             const rightSide = rightSideContent(result);
-
-            // forecast function
             displayForeCast(result.coord.lat, result.coord.lon); 
             
             setTimeout(() => {
@@ -82,14 +75,14 @@ async function findLocation(name) {
     }     
 }
 
-// display image content and temp 
+// display image content and temperature
 function displayImageContent(result) {
     return ` <img src="https://openweathermap.org/img/wn/${result.weather[0].icon}@4x.png" alt=""/>
-            <h2 class="weather_temp">${Math.round(result.main.temp - 275.15)}°C</h2>
+            <h2 class="weather_temp">${Math.round(result.main.temp - 273.15)}°C</h2>
             <h3 class="cloudtxt">${result.weather[0].description}</h3>`; 
 }
 
-// display the right side content
+// function to display the right side content with weather details
 function rightSideContent(result){
     return `<div class="content">
                         <p class="title">NAME</p>
@@ -97,7 +90,7 @@ function rightSideContent(result){
                     </div>
                     <div class="content">
                         <p class="title">TEMP</p>
-                        <span class="value">${Math.round(result.main.temp - 275.15)}°C</span>
+                        <span class="value">${Math.round(result.main.temp - 273.15)}°C</span>
                     </div>
                     <div class="content">
                         <p class="title">HUMIDITY</p>
@@ -109,12 +102,12 @@ function rightSideContent(result){
                     </div>`; 
 }
 
+// function to display the weather forecast based on coordinates
 async function displayForeCast(lat, long) {
     const ForeCast_API =  `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${API}`
     const data = await fetch(ForeCast_API); 
     const result = await data.json(); 
     
-    // filter the forecast 
     const uniqueForeCastDays = [];
     const ForecastDays = result.list.filter((forecast) => {
         const forecastDate = new Date(forecast.dt_txt).getDate(); 
@@ -132,7 +125,7 @@ async function displayForeCast(lat, long) {
 
 }
 
-// forecast html element days
+// function to create HTML for forecast days
 function foreCast(frContent) {
     const day = new Date(frContent.dt_txt);
     const dayName = days[day.getDay()];
@@ -141,107 +134,57 @@ function foreCast(frContent) {
     return `<li>
         <img src="https://openweathermap.org/img/wn/${frContent.weather[0].icon}@2x.png">
         <span>${joinDay}</span>
-        <span class="day_temp">${Math.round(frContent.main.temp - 275.15)}°C</span>
+        <span class="day_temp">${Math.round(frContent.main.temp - 273.15)}°C</span>
         </li>`; 
 }
 
-  var api_key = '83e54857375c4776b39a0bb67239d550';
+// funtcion to perform reverse geocoding using OpenCage API
 
-  // reverse geocoding example (coordinates to address)
-  var latitude = '52.3877830';
-  var longitude = '9.7334394';
-  var query = latitude + ',' + longitude;
+async function reverseGeocode(latitude, longitude) {
+    const api_key = '83e54857375c4776b39a0bb67239d550';
+    const query = `${latitude},${longitude}`;
+    const api_url = 'https://api.opencagedata.com/geocode/v1/json';
+    const request_url = `${api_url}?key=${api_key}&q=${encodeURIComponent(query)}&pretty=1&no_annotations=1`;
 
-  // forward geocoding example (address to coordinate)
-  // var query = 'Philipsbornstr. 2, 30165 Hannover, Germany';
-  // note: query needs to be URI encoded (see below)
-
-  var api_url = 'https://api.opencagedata.com/geocode/v1/json'
-
-  var request_url = api_url
-    + '?'
-    + 'key=' + api_key
-    + '&q=' + encodeURIComponent(query)
-    + '&pretty=1'
-    + '&no_annotations=1';
-
-  // see full list of required and optional parameters:
-  // https://opencagedata.com/api#required-params
-
-  var request = new XMLHttpRequest();
-  request.open('GET', request_url, true);
-
-  request.onload = function() {
-    // see full list of possible response codes:
-    // https://opencagedata.com/api#codes
-
-    if (request.status === 200){
-      // Success!
-      var data = JSON.parse(request.responseText);
-      alert(data.results[0].formatted); // print the location
-
-    } else if (request.status <= 500){
-      // We reached our target server, but it returned an error
-
-      console.log("unable to geocode! Response code: " + request.status);
-      var data = JSON.parse(request.responseText);
-      console.log('error msg: ' + data.status.message);
-    } else {
-      console.log("server error");
+    try {
+        const response = await fetch(request_url);
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.results[0].formatted); // Show location in an alert (consider updating the UI instead)
+        } else {
+            console.log("Unable to geocode! Response code: " + response.status);
+            const errorData = await response.json();
+            console.log('Error message: ' + errorData.status.message);
+        }
+    } catch (error) {
+        console.log("Unable to connect to server", error);
     }
-  };
+}
 
-  request.onerror = function() {
-    // There was a connection error of some sort
-    console.log("unable to connect to server");
-  };
+// Function to handle successful geolocation retrieval
+function success(data) {
+    reverseGeocode(data.coords.latitude, data.coords.longitude);
+}
 
-  request.send();  // make the request
+// Check if geolocation is available and fetch the location
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, console.error);
+} else {
+    console.log("Geolocation is not supported by this browser.");
+}
 
-  function success(data) {
-    var api_key = '83e54857375c4776b39a0bb67239d550';
-    var latitude = 'data.coords.latitude';
-    var longitude = 'data.coords.longitude';
-  
-    var api_url = 'https://api.opencagedata.com/geocode/v1/json'
-  
-    var request_url = api_url
-      + '?'
-      + 'key=' + api_key
-      + '&q=' + encodeURIComponent(query)
-      + '&pretty=1'
-      + '&no_annotations=1';
-      
-    var request = new XMLHttpRequest();
-    request.open('GET', request_url, true);
-  
-    request.onload = function() {
-      // see full list of possible response codes:
-      // https://opencagedata.com/api#codes
-  
-      if (request.status === 200){
-        var data = JSON.parse(request.responseText);
-        alert(data.results[0].formatted); // print the location
-  
-      } else if (request.status <= 500){
-        // We reached our target server, but it returned an error
-  
-        console.log("unable to geocode! Response code: " + request.status);
-        var data = JSON.parse(request.responseText);
-        console.log('error msg: ' + data.status.message);
-      } else {
-        console.log("server error");
-      }
-    };
-  
-    request.onerror = function() {
-      // There was a connection error of some sort
-      console.log("unable to connect to server");
-    };
-  
-    request.send();  // make the request
-    
-  }
+// Event listener for search button
+document.querySelector(".search button").addEventListener("click", function () {
+    findLocation(inputEl.value); // Call findLocation with input value
+});
 
-  navigator.geolocation.getCurrentPosition(success, console.error)
+// Event listener for enter key press in search bar
+document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+    if (event.key == "Enter") {
+        findLocation(inputEl.value); // Call findLocation with input value
+    }
+});
+
+// Fetch location on load
+geocode.getLocation();
   
