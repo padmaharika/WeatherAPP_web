@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container"> <!--Main Conainer for the entire app-->
+        <div class="weather-info"> <!--Displays the current day and date using the IDs present day and date-->
+            <div class="current-day">
+                <h3 id="present-day"></h3>
+                <p id="present-date"></p>
+            </div>
+            <div class="search"> <!--Search bar for users to enter and two buttons - geo and search -->
+                <input type="text" id="location" placeholder="Enter location">
+                <button id="search-button">Search</button>
+                <button id="geo-button">My Geo Location</button>                
+            </div>
+            <div class="current-weather">
+                <div id="weatherDisplay"></div> <!--shows the current weather stats with their detaiös-->
+                <ul>
+                    <li><strong>CITY NAME:</strong> <span id="city"></span></li>
+                    <li><strong>TEMP:</strong> <span id="temperature"></span></li>
+                    <li><strong>HUMIDITY:</strong> <span id="humidity"></span></li>
+                    <li><strong>WIND SPEED:</strong> <span id="wind-speed"></span></li>
+
+                </ul>
+            </div>
+            <div class="air-quality">
+                <h3>Air Quality Index</h3>
+                <div id="airQualityDisplay"></div> 
+            </div>
+        </div>
+        
+        <div class="forecast"> <!--Displays 24 hour weather forecast in the hourlDisplay when fetched-->
+            <h3> Daily: 24 Hours Forecast</h3>
+            <div id="hourlyDisplay" class="hourly-forecast"></div>
+        </div>
+        <!--7 day weather forecast is displayed here-->
+        <div class="forecast">
+            <h3>Weekly Forecast</h3>
+            <div id="forecastDisplay"></div>
+        </div>
+    </div>   
+    <script src="script.js"></script> <!-- script.js is linked here which contains how the weather data will be fetched! -->
+</body>
+</html>
+

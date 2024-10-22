@@ -1,0 +1,168 @@
+
+/* General Body Styling */
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: #ffedfd;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container styles the main wrapper with a background color  */
+.container {
+    background-color: #ffc3e7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.current-day {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.current-day h3 {
+    margin: 0;
+    font-size: 1.6em;
+}
+
+.current-day p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #fffefe;
+}
+
+/* Arranges the input and buttons with padding background colours  */
+.search {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 60%;
+}
+
+.search button {
+    padding: 10px 20px;
+    background-color: #9182c4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.search button:hover {
+    background-color: #3c49a1;
+}
+
+.current-weather ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.current-weather ul li {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+#weatherDisplay {
+    margin-top: 10px;
+}
+
+.forecast {
+    margin-top: 20px;
+}
+
+.forecast h3 {
+    color: #fff9f9;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+#forecastDisplay {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.forecast-day {
+    background-color: #9182c4;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.forecast-day img {
+    width: 40px;
+    height: 40px;
+}
+
+.hourly-forecast {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.forecast-hour {
+    background-color: #9182c4;
+    padding: 5px;
+    border-radius: 5px;
+    width: 50px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.forecast-hour img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Temperature Classes: this adds conditional background colors (cold, hot, night) for temperature visualization */
+.cold {
+    background-color: #c2ddf8;
+}
+
+.hot {
+    background-color: #e19873;
+}
+
+.night {
+    background-color: #2a2438;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .forecast-day, .forecast-hour {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .forecast-day, .forecast-hour {
+        width: 60px;
+        font-size: 0.8em;
+    }
+}
