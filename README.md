@@ -1,9 +1,5 @@
-
-
 # Weather Application
-
 ## Overview
-
 This weather application provides real-time weather data for specified locations, including the option to use the user's current location through the Geolocation API. The app fetches current weather, a 7-day forecast, and air quality information from multiple APIs, ensuring users receive comprehensive data to inform their decisions.
 
 ## Features
@@ -35,6 +31,3 @@ This weather application provides real-time weather data for specified locations
 - OpenAI’s ChatGPT: Used for code assistance and understanding complex JavaScript syntax.
 - Microsoft’s Copilot: Provided suggestions and code completions to enhance coding efficiency.
 
-## License
-
-This project is licensed under the MIT License.
