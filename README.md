@@ -1,4 +1,4 @@
-<div align="center">
+
 
 # Weather Application
 
@@ -38,5 +38,3 @@ This weather application provides real-time weather data for specified locations
 ## License
 
 This project is licensed under the MIT License.
-
-</div>
